@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class ResResSpec {
     private final ResID mId;
-    private final String mName;
+    private String mName;
     private final ResPackage mPackage;
     private final ResTypeSpec mType;
     private final Map<ResConfigFlags, ResResource> mResources = new LinkedHashMap<>();
@@ -87,6 +87,10 @@ public class ResResSpec {
 
     public String getName() {
         return StringUtils.replace(mName, "\"", "q");
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 
     public ResPackage getPackage() {

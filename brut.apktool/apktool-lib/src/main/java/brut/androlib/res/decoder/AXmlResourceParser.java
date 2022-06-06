@@ -20,6 +20,7 @@ import android.content.res.XmlResourceParser;
 import android.util.TypedValue;
 import brut.androlib.AndrolibException;
 import brut.androlib.res.data.ResID;
+import brut.androlib.res.data.ResResSpec;
 import brut.androlib.res.xml.ResXmlEncoders;
 import brut.util.ExtDataInput;
 import com.google.common.io.LittleEndianDataInputStream;
@@ -346,6 +347,15 @@ public class AXmlResourceParser implements XmlResourceParser {
                     value = mAttrDecoder.decodeManifestAttr(getAttributeNameResource(index));
                 }
             } catch (AndrolibException | NullPointerException ignored) {}
+        }
+        try {
+            ResID resID = new ResID(getAttributeNameResource(index));
+            if (mAttrDecoder.getCurrentPackage().hasResSpec(resID)) {
+                ResResSpec resSpec = mAttrDecoder.getCurrentPackage().getResSpec(resID);
+                resSpec.setName(value);
+            }
+        } catch (AndrolibException e) {
+            e.printStackTrace();
         }
         return value;
     }
